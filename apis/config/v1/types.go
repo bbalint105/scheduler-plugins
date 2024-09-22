@@ -24,6 +24,15 @@ import (
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
+//Nicepods
+type NicePodArgs struct {
+	metav1.TypeMeta
+
+	WhatIsNice *string `json:"whatisnice,omitempty"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
 // CoschedulingArgs defines the scheduling parameters for Coscheduling plugin.
 type CoschedulingArgs struct {
 	metav1.TypeMeta `json:",inline"`
@@ -92,12 +101,6 @@ type TrimaranSpec struct {
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +k8s:defaulter-gen=true
-
-type NicePodArgs struct {
-	metav1.TypeMeta
-
-	WhatIsNice *string `json:"whatisnice,omitempty"`
-}
 
 // TargetLoadPackingArgs holds arguments used to configure TargetLoadPacking plugin.
 type TargetLoadPackingArgs struct {
