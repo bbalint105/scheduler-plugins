@@ -6,16 +6,12 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	corev1helpers "k8s.io/component-helpers/scheduling/corev1"
-	"k8s.io/klog/v2"
-	"k8s.io/kubernetes/pkg/scheduler/framework"
-	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/scheduler-plugins/apis/scheduling/v1alpha1"
+	framework "k8s.io/kubernetes/pkg/scheduler/framework"
 	"sigs.k8s.io/scheduler-plugins/apis/config"
 )
 
 type NicePod struct {
-	handle     framework.FrameworkHandle
+	handle     framework.Handle
 	whatisnice *string
 }
 
@@ -25,7 +21,7 @@ func (n *NicePod) Name() string {
 	return Name
 }
 
-func New(obj runtime.Object, h framework.FrameworkHandle) (framework.Plugin, error) {
+func New(obj runtime.Object, h framework.Handle) (framework.Plugin, error) {
 	args, ok := obj.(*config.NicePodArgs)
 	if !ok {
 		return nil, fmt.Errorf("want args to be of type NicePodArgs, got %T", obj)
@@ -42,8 +38,8 @@ func New(obj runtime.Object, h framework.FrameworkHandle) (framework.Plugin, err
 // PreFilter checks if the scheduled Pod has the nicepod-label value 'nice'. Because we only want 'nice' pods.
 func (np *NicePod) PreFilter(ctx context.Context, state *framework.CycleState, pod *v1.Pod) (*framework.PreFilterResult, *framework.Status) {
 	// If PreFilter fails, return framework.UnschedulableAndUnresolvable to avoid any preemption attempts.
-	if (pod.Labels["nicepod"] != &np.whatisnice) {
-		return nil, framework.NewStatus(framework.UnschedulableAndUnresolvable, err.Error())
+	if (pod.Labels["nicepod"] != *np.whatisnice) {
+		return nil, framework.NewStatus(framework.Unschedulable, "Pod is not nice.")
 	}
 	return nil, framework.NewStatus(framework.Success, "")
 }
