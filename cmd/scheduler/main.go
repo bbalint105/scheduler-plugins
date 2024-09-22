@@ -47,6 +47,7 @@ func main() {
 	// Later they can consist of scheduler profile(s) and hence
 	// used by various kinds of workloads.
 	command := app.NewSchedulerCommand(
+		app.WithPlugin(nicepod.Name, nicepod.New),
 		app.WithPlugin(capacityscheduling.Name, capacityscheduling.New),
 		app.WithPlugin(coscheduling.Name, coscheduling.New),
 		app.WithPlugin(loadvariationriskbalancing.Name, loadvariationriskbalancing.New),

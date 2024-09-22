@@ -104,6 +104,14 @@ var (
 	DefaultSySchedProfileName = "all-syscalls"
 )
 
+// SetDefaults_NicePodArgs sets the default parameters for NicePod plugin.
+func SetDefaultNicePodArgs(args *NicePodArgs) {
+	if args.WhatIsNice == nil {
+		win := string("nice")
+		args.WhatIsNice = &win
+	}
+}
+
 // SetDefaults_CoschedulingArgs sets the default parameters for Coscheduling plugin.
 func SetDefaults_CoschedulingArgs(obj *CoschedulingArgs) {
 	if obj.PermitWaitingTimeSeconds == nil {

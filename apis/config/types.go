@@ -24,6 +24,12 @@ import (
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
+type NicePodArgs struct {
+	metav1.TypeMeta
+
+	WhatIsNice string
+}
+
 // CoschedulingArgs defines the parameters for Coscheduling plugin.
 type CoschedulingArgs struct {
 	metav1.TypeMeta
