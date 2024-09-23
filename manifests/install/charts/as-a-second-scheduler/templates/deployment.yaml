@@ -54,18 +54,7 @@ spec:
         - --config=/etc/kubernetes/scheduler-config.yaml
         image: {{ .Values.scheduler.image }}
         imagePullPolicy: IfNotPresent
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 10259
-            scheme: HTTPS
-          initialDelaySeconds: 15
         name: scheduler-plugins-scheduler
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 10259
-            scheme: HTTPS
         resources:
           requests:
             cpu: '0.1'

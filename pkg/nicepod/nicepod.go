@@ -21,7 +21,7 @@ func (n *NicePod) Name() string {
 	return Name
 }
 
-func New(obj runtime.Object, h framework.Handle) (framework.Plugin, error) {
+func New(_ context.Context, obj runtime.Object, h framework.Handle) (framework.Plugin, error) {
 	args, ok := obj.(*config.NicePodArgs)
 	if !ok {
 		return nil, fmt.Errorf("want args to be of type NicePodArgs, got %T", obj)
